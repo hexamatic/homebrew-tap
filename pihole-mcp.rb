@@ -5,33 +5,43 @@
 class PiholeMcp < Formula
   desc "Pi-hole v6 MCP server — DNS blocking, domain management, statistics and network administration"
   homepage "https://github.com/hexamatic/pihole-mcp"
-  version "0.5.0"
+  version "0.6.0"
   license "MIT"
 
   on_macos do
-    on_intel do
-      url "https://github.com/hexamatic/pihole-mcp/releases/download/v0.5.0/pihole-mcp_0.5.0_darwin_amd64.tar.gz"
-      sha256 "c9c282da9035becc866bc6e9f8fc370154b470c880f64119b508746b3a4e7008"
+    if Hardware::CPU.intel?
+      url "https://github.com/hexamatic/pihole-mcp/releases/download/v0.6.0/pihole-mcp_0.6.0_darwin_amd64.tar.gz"
+      sha256 "1b3026a9cb6b84e87fae72114eaf5bd3c5b3ea54bb2a989e385a579107a93451"
+
+      define_method(:install) do
+        bin.install "pihole-mcp"
+      end
     end
-    on_arm do
-      url "https://github.com/hexamatic/pihole-mcp/releases/download/v0.5.0/pihole-mcp_0.5.0_darwin_arm64.tar.gz"
-      sha256 "0d87bc6333f17d486e8b644ea050702494032f1101cc9628248d8aaa02ab64b6"
+    if Hardware::CPU.arm?
+      url "https://github.com/hexamatic/pihole-mcp/releases/download/v0.6.0/pihole-mcp_0.6.0_darwin_arm64.tar.gz"
+      sha256 "9f5cae06e03245d477940275e6818ddae95ad95f5739f77738f77422e0c5b1c4"
+
+      define_method(:install) do
+        bin.install "pihole-mcp"
+      end
     end
   end
 
   on_linux do
-    on_intel do
-      url "https://github.com/hexamatic/pihole-mcp/releases/download/v0.5.0/pihole-mcp_0.5.0_linux_amd64.tar.gz"
-      sha256 "32810684e79465672d42e063390737f7dc53d5d7a2e942c63ba692de99f9753b"
+    if Hardware::CPU.intel? && Hardware::CPU.is_64_bit?
+      url "https://github.com/hexamatic/pihole-mcp/releases/download/v0.6.0/pihole-mcp_0.6.0_linux_amd64.tar.gz"
+      sha256 "90e6024e9c769dbdc16b5463a428591ffb04ed9a1a534960d431cd7b7d03e89d"
+      define_method(:install) do
+        bin.install "pihole-mcp"
+      end
     end
-    on_arm do
-      url "https://github.com/hexamatic/pihole-mcp/releases/download/v0.5.0/pihole-mcp_0.5.0_linux_arm64.tar.gz"
-      sha256 "f82585d855a06ccc850515536c1fec64912b37f75cede5b04b7ade9256c9a050"
+    if Hardware::CPU.arm? && Hardware::CPU.is_64_bit?
+      url "https://github.com/hexamatic/pihole-mcp/releases/download/v0.6.0/pihole-mcp_0.6.0_linux_arm64.tar.gz"
+      sha256 "183fd2df01c42c3cb214c5aafeb0e95444f9adf11050d1421e772ad135a1bd59"
+      define_method(:install) do
+        bin.install "pihole-mcp"
+      end
     end
-  end
-
-  def install
-    bin.install "pihole-mcp"
   end
 
   test do
